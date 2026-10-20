@@ -68,3 +68,21 @@
   * `DELETE /api/carteirinhas/{id}` — Inativa/remove a carteirinha.
   * `POST /api/carteirinhas/{id}/debitar` — Debita um valor do saldo (Valida saldo suficiente).
   * `POST /api/carteirinhas/{id}/recarregar` — Adiciona valor ao saldo da carteirinha.
+
+* **Pseudocódigo da Regra de Negócio (Débito com Validação de Saldo):**
+```text
+Função debitarSaldo(carteirinhaId, valorDebito):
+    carteirinha = repository.buscarPorId(carteirinhaId)
+    
+    Se carteirinha.status == "BLOQUEADA" Então
+        LançarErro("Carteirinha bloqueada para compras.")
+    FimSe
+    
+    Se carteirinha.saldo >= valorDebito Então
+        carteirinha.saldo = carteirinha.saldo - valorDebito
+        Retornar repository.salvar(carteirinha)
+    Senão
+        LançarErro("Saldo insuficiente para realizar a compra.")
+    FimSe
+FimFuncao
+```
