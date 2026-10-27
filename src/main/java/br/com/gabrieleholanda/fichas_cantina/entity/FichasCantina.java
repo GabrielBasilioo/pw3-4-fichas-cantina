@@ -1,5 +1,6 @@
 package br.com.gabrieleholanda.fichas_cantina.entity;
 
+import br.com.gabrieleholanda.fichas_cantina.enums.StatusAlunoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "TBL_CARTEIRINHA_ALUNO")
-public class fichas_cantina {
+@Table(name = "TBL_CARTEIRINHA")
+public class FichasCantina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ALUNO")
