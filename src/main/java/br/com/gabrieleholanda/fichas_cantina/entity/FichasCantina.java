@@ -1,6 +1,6 @@
 package br.com.gabrieleholanda.fichas_cantina.entity;
 
-import br.com.gabrieleholanda.fichas_cantina.enums.StatusAlunoEnum;
+import br.com.gabrieleholanda.fichas_cantina.enums.StatusCarteirinhaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +10,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "TBL_CARTEIRINHA")
 public class FichasCantina {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_ALUNO")
+    @Column(name = "ID_CARTEIRINHA")
     private Long id;
 
     @Column(name = "NOME_ALUNO")
@@ -20,10 +21,11 @@ public class FichasCantina {
 
     @Column(name = "MATRICULA")
     private String matricula;
+
     @Column(name = "SALDO")
     private Double saldo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_ALUNO")
-    private StatusAlunoEnum status;
+    private StatusCarteirinhaEnum status;
 }
