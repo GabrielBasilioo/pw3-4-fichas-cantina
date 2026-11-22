@@ -19,7 +19,7 @@ public class FichasCantina {
     @Column(name = "NOME_ALUNO")
     private String nome;
 
-    @Column(name = "MATRICULA")
+    @Column(name = "MATRICULA", unique = true)
     private String matricula;
 
     @Column(name = "SALDO")

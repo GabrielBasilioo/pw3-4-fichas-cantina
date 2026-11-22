@@ -7,11 +7,12 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(
-        componentModel = "spring",
-        uses = FichasMapper.class
+        componentModel = "spring"
 )
 
 public interface FichasMapper {
+
+    FichasResponseDTO toResponseDTO(FichasCantina entity);
 
     List<FichasResponseDTO> toRespostaDTOList(List<FichasCantina> entities);
 }
