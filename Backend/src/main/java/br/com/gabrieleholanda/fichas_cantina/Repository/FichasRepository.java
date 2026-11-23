@@ -6,4 +6,5 @@ import org.yaml.snakeyaml.events.Event;
 
 public interface FichasRepository extends JpaRepository<FichasCantina, Long> {
     boolean existsByMatricula(String matricula);
+    boolean existsByMatriculaAndIdNot(String matricula, Long id);
 }

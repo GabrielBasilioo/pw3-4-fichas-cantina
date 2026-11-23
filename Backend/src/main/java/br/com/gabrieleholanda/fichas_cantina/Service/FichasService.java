@@ -8,7 +8,9 @@ import br.com.gabrieleholanda.fichas_cantina.enums.StatusCarteirinhaEnum;
 import br.com.gabrieleholanda.fichas_cantina.mapper.FichasMapper;
 import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +38,8 @@ public class FichasService {
     public FichasResponseDTO cadastrar(FichasCantina carteirinha) {
 
         if (carteirinhaRepository.existsByMatricula(carteirinha.getMatricula())) {
-            throw new RuntimeException("Essa matrícula já está cadastrada!");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Essa matrícula já está cadastrada!");
+
         }
 
 
@@ -54,6 +57,10 @@ public class FichasService {
 
     public Optional<FichasResponseDTO> atualizar(Long id, FichasCantina dados) {
         return carteirinhaRepository.findById(id).map(carteirinha -> {
+
+            if (carteirinhaRepository.existsByMatriculaAndIdNot(dados.getMatricula(), id)) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Essa matrícula já está cadastrada!");
+            }
             carteirinha.setNome(dados.getNome());
             carteirinha.setMatricula(dados.getMatricula());
             var result = carteirinhaRepository.save(carteirinha);
@@ -87,7 +94,7 @@ public class FichasService {
         return carteirinhaRepository.findById(id).map(carteirinha -> {
 
             if (carteirinha.getStatus() == StatusCarteirinhaEnum.BLOQUEADA) {
-                throw new RuntimeException("Carteirinha bloqueada.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Carteirinha bloqueada.");
             }
 
             if (carteirinha.getSaldo() >= valorDebito) {
@@ -95,7 +102,7 @@ public class FichasService {
                 var result = carteirinhaRepository.save(carteirinha);
                 return carteirinhaMapper.toResponseDTO(result);
             } else {
-                throw new RuntimeException("Saldo insuficiente.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo insuficiente.");
             }
         });
     }
