@@ -1,10 +1,10 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CarteirinhaService } from '../../services/carteirinha';
 import { CarteirinhaAluno } from '../../models/carteirinha-aluno';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-listagem',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './listagem.html',
   styleUrl: './listagem.css',
 })
